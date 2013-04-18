@@ -1,0 +1,273 @@
+//
+// Mixins to help reduce verbose repeating markup
+// @author Ad Taylor
+//
+
+// ==========================================================================
+// Column helper
+// For each grid, output conditional display classes, within media queries if appropriate
+// ==========================================================================
+
+@mixin create-conditional-classes($grids) {
+  @each $grid in $grids {
+    $grid-name: nth($grid, 1);
+
+    @each $nested-grid in $grids {
+      $nested-grid-name: nth($nested-grid, 1);
+
+      @include is-responsive($nested-grid){
+        @include conditional-display($grid-name, $nested-grid-name);
+      }      
+    }
+  }
+}
+
+// ==========================================================================
+// Column helper
+// Abstract the conditional display classes from @mixin create-conditional-classes
+// ==========================================================================
+
+@mixin conditional-display($grid-name, $nested-grid-name){  
+  @if($grid-name == $nested-grid-name) {
+    .#{$grid-name}hide{display:none !important}
+    .#{$grid-name}only{display:block !important}
+  }
+  @else {
+    .#{$grid-name}hide{display:block !important}
+    .#{$grid-name}only{display:none !important}
+  }
+}
+
+// ==========================================================================
+// Create column sizes
+// ==========================================================================
+
+@mixin create-column-sizes($grids) {
+  $query-pos: 4;
+  @each $grid in $grids {
+    // If there is a media query
+    @if(length($grid) == 1){}
+    @else if(length($grid) >= $query-pos) {
+      @include media-query($grid) {
+        @include build-column-size($grid);
+      }
+    }
+    @else {
+      @include build-column-size($grid);
+    }
+  }
+  @include create-conditional-classes($grids);
+}
+
+// ==========================================================================
+// Build column size
+// ==========================================================================
+
+@mixin build-column-size($grid) {
+  $padding-pos: 3;
+  $total-columns: nth($grid,2);
+
+  @if(length($grid) >= $padding-pos ) {
+    .column {
+      padding: 0 (0.5 * nth($grid,$padding-pos));
+      @if($total-columns > 1){
+        float: left;
+        width: 100%;
+        & + &:last-child {
+          float: right;
+        }
+      }
+    }
+  }
+
+  @if($total-columns > 1) {
+    @for $i from 1 through $total-columns {
+      .#{nth($grid,1)}#{convert-number-to-word($i)} {
+        width: gridCalc($i, $total-columns);
+      }
+      .#{nth($grid,1)}push-#{convert-number-to-word($i)} {
+        left: gridCalc($i, $total-columns);
+      }
+      .#{nth($grid,1)}pull-#{convert-number-to-word($i)} {
+        right: gridCalc($i, $total-columns);
+      }
+    }
+    .#{nth($grid,1)}push-none {
+      left: 0;
+    }
+    .#{nth($grid,1)}pull-none {
+      right: 0;
+    }
+  }
+}
+
+// ==========================================================================
+// Conditional CSS - JS Detection
+// ==========================================================================
+
+@mixin conditional-CSS($grids) {
+  $query-pos: 5;
+
+  @each $grid in $grids {
+    @if(length($grid) < $query-pos){
+      body:after {
+        content: nth($grid,1);
+        display: none;
+      }
+    }
+    @else {
+      @include media-query($grid) {
+        body:after {
+          content:nth($grid, 1);
+          display:none;
+        }
+      }
+    }
+  }
+}
+
+// ==========================================================================
+// Simple Media Query Generator
+// ==========================================================================
+
+@mixin media-query($gridObj) {
+  @if length($gridObj) > 3 {
+    $queryType: nth($gridObj, 4);
+    $querySize: nth($gridObj, 5);
+
+    @include respond-to($queryType, $querySize) {
+      @content;
+    }
+  }
+}
+
+// ==========================================================================
+// Micro Clearfix - Nicolas Gallagher
+// ==========================================================================
+
+@mixin clearfix() { *zoom:1;
+  &:before, &:after { content: ""; display: table; }
+  &:after { clear: both; }
+}
+
+// ==========================================================================
+// Internet Explorer Fixes
+// ==========================================================================
+
+// IE7 inline-block ~ twitter bootstrap
+
+@mixin ie7-inline-block {
+  *display: inline;
+  *zoom: 1;
+}
+
+// IE7 likes to collapse whitespace on either side of the inline-block elements.
+// Ems because we're attempting to match the width of a space character. Left
+// version is for form buttons, which typically come after other elements, and
+// right version is for icons, which come before. Applying both is ok, but it will
+// mean that space between those elements will be .6em (~2 space characters) in IE7,
+// instead of the 1 space in other browsers.  ~ twitter bootstrap
+
+@mixin ie7-restore-left-whitespace {
+  *margin-left: .3em;
+
+  &:first-child {
+    *margin-left: 0;
+  }
+}
+
+// ==========================================================================
+// Accessibility
+// ==========================================================================
+
+@mixin set-focus {
+  outline: 3px solid yellow;
+}
+
+
+// ==========================================================================
+// Uncle Dave's Ol' Padded Box
+// ==========================================================================
+
+@mixin ol-padded-box($ratioW, $ratioH) {
+  background-size: cover;
+  height: 0;
+  display: block;
+  padding-bottom: 0% + ($ratioH/$ratioW)*100;
+}
+
+
+// ==========================================================================
+// Smallest query
+// Output within a media query for the smallest breakpoint
+// @param [Boolean] $ie-override - if true and $old-ie true, output regularly
+// ==========================================================================
+
+@mixin smallest-query($ie-override: false) {
+  @if length($grids) > 1 {
+    $length: length($grids);
+    $mobile: nth($grids, 2);
+
+    @include media-query($mobile) {
+      @content;
+    }
+  }
+  // If old IE and override both set,
+  // output without query
+  @if $old-ie and $ie-override {
+    @content;
+  }
+}
+
+// ==========================================================================
+// Is Responsive? - helper
+// Pass in content to be conditionally output either in a media query or by default
+// ==========================================================================
+
+@mixin is-responsive($grid){
+  @if length($grid) > 3 {
+    @include media-query($grid){
+      @content;
+    }
+  }
+  @else {
+    @content;
+  }
+}
+
+// ==========================================================================
+// Respond to - helper
+// If IE has a fixed query ($fixed-mqs) set, output it by default, otherwise output media query
+// ==========================================================================
+
+@mixin respond-to($query, $size) {  
+  @if $fixed-mqs {
+    @if $query == "max" {
+      @if $container-width == $size {
+        @content;
+      }
+    }
+    @else if $query == "min" {
+      @if $container-width == $size {
+        @content;
+      }
+    }
+  }
+  @else {
+    // output normally
+    @media ("#{$query}-width: #{$size}") {
+      @content;
+    }
+  }
+}
+
+// ==========================================================================
+// Old IE
+// If old IE version (7,8) output IE only styles
+// ==========================================================================
+
+@mixin old-ie {
+  @if $old-ie {
+    @content;
+  }
+}

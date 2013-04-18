@@ -1,0 +1,148 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Testing the Styleguide</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" href="styles/application.css">
+        <script src="components/modernizr/modernizr.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <header class="mother-eight column">
+                <h1>Testing the Styleguide</h1>
+            </header>
+            <div class="row">
+                <h2 class="mother-eight column">Paragraphs</h3>
+            </div>
+            <div class="row">
+                <div class="mother-two sister-one column">
+                    <p>Standard paragraph, yo</p>
+                </div>
+                <div class="mother-two sister-one column">
+                    <p class="standout">Standout!</p>
+                </div>
+                <div class="mother-two sister-one column">
+                    <p class="secondary">Secodary</p>
+                </div>
+                <div class="mother-two sister-one column">
+                    <p class="support">Support</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="lists">
+                    <header class="mother-eight column">
+                        <h2>Lists</h2>
+                    </header>
+                    <div class="mother-two sister-one column">
+                        <h3>Unordered</h3>
+                        <ul>
+                            <li><a href="#">Item 1</a></li>
+                            <li><a href="#">Item 2</a></li>
+                            <li><a href="#">Item 3</a></li>
+                        </ul>
+                    </div>
+                    <div class="mother-two sister-one column">
+                        <h3>Ordered</h3>
+                        <ul>
+                            <li><a href="#">Item 1</a></li>
+                            <li><a href="#">Item 2</a></li>
+                            <li><a href="#">Item 3</a></li>
+                        </ul>
+                    </div>
+                    <div class="mother-two sister-one column">
+                        <h3>Nested</h3>
+                        <ul>
+                            <li><a href="#">Item 1</a></li>
+                            <li><a href="#">Item 2</a></li>
+                            <ul>
+                                <li><a href="#">Item 3</a></li>
+                                <li><a href="#">Item 4</a></li>
+                            </ul>
+                            <li><a href="#">Item 5</a></li>
+                            <li><a href="#">Item 6</a></li>
+                        </ul>
+                    </div>
+                    <div class="mother-two sister-one column">
+                        <h3>Action</h3>
+                        <ul class="action-list">
+                            <li><a href="#">Item 1</a></li>
+                            <li><a href="#">Item 2</a></li>
+                            <li><a href="#">Item 5</a></li>
+                            <li><a href="#">Item 6</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="mother-eight sister-four column">
+                    <h2>Labels</h2>
+                    <a class="label" href="#">Default Label</a>
+                    <a class="label orange">Orange Label</a>
+                    <a class="label blue">Blue Label</a>
+                    <a class="label green">Green Label</a>
+                    <a class="label green shout small">Small Label</a>
+                    <a class="label green shout medium">Medium Label</a>
+                    <a class="label green shout large">Large Label</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="mother-eight sister-four column">
+                    <h2>Buttons</h2>
+                    <a class="btn">Ceci n'est pas un bouton</a>
+                    <button class="btn">Ceci n'est pas un lien</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="mother-four sister-four column">
+                    <h2>Forms</h2>
+                    <form action="/test-endpoint" class="horizontal formtastic entry" data-forms-success-content=" " data-forms-success-replace=".test-content" data-forms="/test-endpoint">
+                        <fieldset class="inputs">
+                            <ol>
+                                <li class="string input required stringish">
+                                    <label for="test_entry_first_name">
+                                        First name
+                                        <abbr title="required">*</abbr>
+                                    </label>
+                                    <input id="test_entry_first_name" maxlength="255" name="entry[first_name]" type="text">
+                                </li>
+                                <li class="string input required stringish">
+                                    <label for="test_entry_last_name">
+                                        Last name
+                                        <abbr title="required">*</abbr>
+                                    </label>
+                                    <input id="test_entry_last_name" maxlength="255" name="entry[last_name]" type="text">
+                                </li>
+                                <li class="email input required stringish">
+                                    <label for="test_entry_email">
+                                        Email
+                                        <abbr title="required">*</abbr>
+                                    </label>
+                                    <input id="test_entry_email" maxlength="255" name="entry[email]" type="email">
+                                </li>
+                            </ol>
+                        </fieldset>
+                        <fieldset class="actions">
+                            <ol>
+                                <li class="support action">
+                                    <p>By submitting this test you agree to the <a href="/terms-and-conditions">Terms and Conditions</a> and to share your information with us.</p>
+                                </li>
+                                <li class="action button_action">
+                                    <button class="green btn" name="button" type="submit">Submit Test</button>
+                                </li>
+                            </ol>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--[if lt IE 7]>
+        <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+    </body>
+</html>
