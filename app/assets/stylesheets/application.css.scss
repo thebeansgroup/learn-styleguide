@@ -1,15 +1,41 @@
-@charset "UTF-8"
+@charset "UTF-8";
 
-@import "compass"
-@import "modular-scale"
+@import "styleguide";
 
-@import "settings"
-@import "functions"
-@import "mixins"
-@import "./styleguide/base/_all"
-@import "./styleguide/base/webfonts/_all"
-@import "./styleguide/grid/_grid"
+// ======================================================
+// Settings grids
+// ======================================================
 
-@include create-column-sizes($grids)
+// Max container width
+$container-width: 960px;
 
-@import "./styleguide/modules/_all-grid"
+$baby: 'baby-', 2, 10px;
+$sister: 'sister-', 4, 15px, "min", 655px;
+$mother: 'mother-', 8, 20px, "min", $container-width;
+
+// Declare grid
+$grids : $baby, $sister, $mother;
+
+// Module scale
+$baseFontSize: 14px !default;
+$importantModNum: 300px !default;
+$base-size: $baseFontSize $importantModNum;
+
+$base-font-family: "Helvetica Neue", helvetica, arial, sans-serif !default;
+$base-line-height: 1.57;
+$base-line-height-px: 22px;
+
+$header-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif !default;
+$header-font-weight: bold !default;
+$header-font-color: #222 !default;
+$body-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif !default;
+$body-font-weight: normal !default;
+$body-font-color: $txt-color !default;
+
+@import "styleguide/base/_all";
+@import "styleguide/modules/_all-grid";
+@import "styleguide/modules/_all-no-grid";
+
+@import "styleguide/grid/_grid";
+
+@include create-column-sizes($grids);
