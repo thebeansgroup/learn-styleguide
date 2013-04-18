@@ -128,7 +128,9 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-rails (~> 3.2.1)
+  compass-rails
   jquery-rails
+  modular-scale
   rails (= 3.2.13)
   sass-rails (~> 3.2.3)
   sb-styleguide

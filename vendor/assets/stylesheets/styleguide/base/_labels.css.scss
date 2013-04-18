@@ -1,0 +1,58 @@
+//
+// Labels
+// $author Ad Taylor
+//
+@import "compass/css3";
+
+// ==========================================================================
+// Label colouring in
+// ==========================================================================
+
+@mixin label-color($color, $hover-color, $txt-color, $hover-txt-color: false) {
+  background-color: $color;
+  color: $txt-color;
+
+  &:hover, &.is-active {
+    background-color: $hover-color;
+    @if $hover-txt-color {
+      color: $hover-txt-color;
+    } @else {
+      color: $txt-color;
+    }
+  }
+}
+
+// ==========================================================================
+// Default alert
+// ==========================================================================
+.label {
+  display: inline-block;
+  @include ie7-inline-block;
+  padding: -1px+ms(0)/4 ms(0)/2 1px+ms(0)/4 ;
+  margin-bottom: 0; // For input.btn
+  @include ie7-restore-left-whitespace;
+
+  @include border-radius( ms(0)/4 );
+
+  @include label-color( mono(2), mono(3) , $white);
+  @extend small;
+  line-height: 1;
+  text-align: center;
+  letter-spacing: 1px;
+  vertical-align: middle;
+
+  /* Label colors */
+  &.orange {
+    @include label-color( orange(), orange(2), $white );
+  }
+
+  &.blue {
+    @include label-color( blue(), blue(2), $white );
+ }
+
+  &.green {
+    @include label-color( green(), green(2), $white);
+ }
+
+}
+

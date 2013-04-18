@@ -1,0 +1,127 @@
+//
+// Grids - based on Foundation
+// $author Ad Taylor
+//
+@import "compass/css3";
+
+
+// ==========================================================================
+// Conditional CSS - JS Detection
+// ==========================================================================
+
+@include conditional-CSS($grids);
+
+
+// ==========================================================================
+// Set default box model
+// ==========================================================================
+
+@if $setBoxSizing {
+  * {
+    @include box-sizing(border-box);
+    *behavior: url(/boxsizing.htc);
+  }
+}
+
+
+// ==========================================================================
+// Container
+// ==========================================================================
+
+.container {
+  width: $container-width;
+  max-width: $container-max-width;
+  min-width: $container-min-width;
+  margin: 0 auto;
+
+  @include clearfix;
+
+  &.full {
+    width: auto;
+  }
+}
+
+// ==========================================================================
+// Rows
+// ==========================================================================
+
+.row {
+  @include clearfix;
+  $padding-pos: 3;
+  //$query-pos: 4;
+  $query-pos: 5;
+
+  @each $grid in $grids {
+    @if(length($grid) == $query-pos ) {
+      //@include media-query( nth($grid,$query-pos)) {
+      @include media-query($grid) {
+        .row {
+          margin: 0 0px-(0.5*nth($grid,$padding-pos));
+        }
+      }
+    }
+    @else {
+      @if(length($grid) > 1){
+        .row {
+          margin: 0 0-(0.5*nth($grid,$padding-pos));
+        }
+      }
+    }
+  }
+
+  &.collapse {
+    & > .column {
+      padding-left: 0;
+      padding: 0;
+    }
+  }
+}
+
+// ==========================================================================
+// Columns
+// ==========================================================================
+
+.column {
+  position: relative;
+  
+  //padding: 0 ($column-gutter/2);
+
+  
+
+  &.center {
+    float: none;
+    margin: 0 auto;
+  }
+
+  & > .suffix,
+  & > .prefix {
+    width: 100%;
+  }
+}
+
+
+// ==========================================================================
+// Image Blocks
+// ==========================================================================
+
+.img-block {
+  .img {
+    float:left;
+    margin:0 $column-gutter*2 0 0;
+  }
+
+  .img-medium {
+    margin-right: $column-gutter*4;
+  }
+
+  .img img {
+    display:block;
+  }
+
+  .content {
+    display:table-cell;
+    width:10000px;
+    *width:auto;
+    *zoom:1;
+  }
+}
